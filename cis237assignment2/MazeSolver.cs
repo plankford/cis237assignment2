@@ -51,8 +51,10 @@ namespace cis237assignment2
         /// Feel free to change the return type if you like, or pass in parameters that you might need.
         /// This is only a very small starting point.
         /// </summary>
+
         private void mazeTraversal()
         {
+            //Pass in parameters to move(this is the recursive method)
             //Implement maze traversal recursive call
         }
     }

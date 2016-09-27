@@ -78,6 +78,7 @@ namespace cis237assignment2
         static char[,] transposeMaze(char[,] mazeToTranspose)
         {
             //Write code her to create a transposed maze.
+            //******Make new character array in here to transpose the array
             return new char[1, 1];
         }
     }
