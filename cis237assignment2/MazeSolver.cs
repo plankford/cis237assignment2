@@ -42,6 +42,10 @@ namespace cis237assignment2
             this.xStart = xStart;
             this.yStart = yStart;
 
+            int facing = 1;
+
+            mazeTraversal(maze, xStart, yStart, facing);
+
             //Do work needed to use mazeTraversal recursive call and solve the maze.
         }
 
@@ -52,10 +56,94 @@ namespace cis237assignment2
         /// This is only a very small starting point.
         /// </summary>
 
-        private void mazeTraversal()
+        private void mazeTraversal(char[,] maze, int xPos, int yPos, int facing)
         {
             //Pass in parameters to move(this is the recursive method)
             //Implement maze traversal recursive call
+
+            char currentPosition = maze[xPos, yPos];
+
+            maze[xPos, yPos] = '0';
+
+            printMaze(maze, xPos, yPos);
+
+            int success = 0;
+
+            while (success == 0)
+            {
+                if ((xPos == 4) && (yPos == 11))
+                {
+                    //At the exit of the maze - set success high
+                    success = 1;
+                }
+                else if (facing == 0)   //Facing Up
+                {
+                    if (maze[xPos,yPos + 1] == '.') //Check spot to the right
+                    {
+                        mazeTraversal(maze, xPos, yPos + 1, 1); // Move to the right
+                    }
+                    else if (maze[xPos - 1, yPos] == '.') //Check spot above
+                    {
+                        mazeTraversal(maze, xPos - 1, yPos, 1); // Move up
+                    }
+                    else if (maze[xPos, yPos - 1] == '.') //Check spot to the left
+                    {
+                        mazeTraversal(maze, xPos, yPos - 1, 1); // Move left
+                    }
+                    else
+                    {
+                        success = 0;
+                    }
+                }
+                else if (facing == 1)   //Facing Right
+                {
+                    if (maze[xPos + 1, yPos] == '.') //Check spot down
+                    {
+                        mazeTraversal(maze, xPos + 1, yPos, 2); // Move down
+                    }
+                    else if (maze[xPos, yPos + 1] == '.') //Check to the right
+                    {
+                        mazeTraversal(maze, xPos, yPos + 1, 1); // Move right
+                    }
+                    else if (maze[xPos - 1, yPos] == '.') //Check spot above
+                    {
+                        mazeTraversal(maze, xPos - 1, yPos, 0); // Move up
+                    }
+                    else
+                    {
+                        success = 0;
+                    }
+                }
+                else if (facing == 2)   //Facing Down
+                {
+                    
+                }
+                else if (facing == 3)   //Facing Left
+                {
+                    
+                }
+            }
+    
+        }
+
+        private void printMaze(char[,] maze, int xPos, int yPos)
+        {
+            int counter = 0;
+
+            foreach (char x in maze)
+            {
+                if (counter == 11)
+                {
+                    Console.WriteLine(x);
+                    counter = 0;
+                }
+                else
+                {
+                    Console.Write(x);
+                    counter++;
+                }
+
+            }
         }
     }
 }
