@@ -78,49 +78,83 @@ namespace cis237assignment2
                 }
                 else if (facing == 0)   //Facing Up
                 {
-                    if (maze[xPos,yPos + 1] == '.') //Check spot to the right
+                    if (maze[xPos,yPos + 1] == '.') //Try Right
                     {
                         mazeTraversal(maze, xPos, yPos + 1, 1); // Move to the right
                     }
-                    else if (maze[xPos - 1, yPos] == '.') //Check spot above
+                    else if (maze[xPos - 1, yPos] == '.') //Try Up
                     {
                         mazeTraversal(maze, xPos - 1, yPos, 1); // Move up
                     }
-                    else if (maze[xPos, yPos - 1] == '.') //Check spot to the left
+                    else if (maze[xPos, yPos - 1] == '.') //Try Left
                     {
                         mazeTraversal(maze, xPos, yPos - 1, 1); // Move left
                     }
                     else
                     {
-                        success = 0;
+                        //success = 0;
+                        return;
                     }
                 }
                 else if (facing == 1)   //Facing Right
                 {
-                    if (maze[xPos + 1, yPos] == '.') //Check spot down
+                    if (maze[xPos + 1, yPos] == '.') //Try Down
                     {
                         mazeTraversal(maze, xPos + 1, yPos, 2); // Move down
                     }
-                    else if (maze[xPos, yPos + 1] == '.') //Check to the right
+                    else if (maze[xPos, yPos + 1] == '.') //Try Right
                     {
                         mazeTraversal(maze, xPos, yPos + 1, 1); // Move right
                     }
-                    else if (maze[xPos - 1, yPos] == '.') //Check spot above
+                    else if (maze[xPos - 1, yPos] == '.') //Try Up
                     {
                         mazeTraversal(maze, xPos - 1, yPos, 0); // Move up
                     }
                     else
                     {
-                        success = 0;
+                        //success = 0;
+                        return;
                     }
                 }
                 else if (facing == 2)   //Facing Down
                 {
-                    
+                    if (maze[xPos + 1, yPos] == '.') //Try Down
+                    {
+                        mazeTraversal(maze, xPos + 1, yPos, 2); // Move down
+                    }
+                    else if (maze[xPos, yPos + 1] == '.') //Try Right
+                    {
+                        mazeTraversal(maze, xPos, yPos + 1, 1); // Move right
+                    }
+                    else if (maze[xPos, yPos - 1] == '.') //Try Left
+                    {
+                        mazeTraversal(maze, xPos, yPos - 1, 3); // Move Left
+                    }
+                    else
+                    {
+                        //success = 0;
+                        return;
+                    }
                 }
                 else if (facing == 3)   //Facing Left
                 {
-                    
+                    if (maze[xPos, yPos - 1] == '.') //Try Left
+                    {
+                        mazeTraversal(maze, xPos, yPos - 1, 3); // Move Left
+                    }
+                    else if (maze[xPos + 1, yPos] == '.') //Try Down
+                    {
+                        mazeTraversal(maze, xPos + 1, yPos, 2); // Move Down
+                    }
+                    else if (maze[xPos - 1, yPos] == '.') //Try Up
+                    {
+                        mazeTraversal(maze, xPos - 1, yPos, 0); // Move up
+                    }
+                    else
+                    {
+                        //success = 0;
+                        return;
+                    }
                 }
             }
     
