@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Patrick Lankford cis237 TR
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,6 +22,7 @@ namespace cis237assignment2
         char[,] maze;
         int xStart;
         int yStart;
+        int solved = 0;
 
         /// <summary>
         /// Default Constuctor to setup a new maze solver.
@@ -42,7 +45,8 @@ namespace cis237assignment2
             this.xStart = xStart;
             this.yStart = yStart;
 
-            int facing = 1;
+            solved = 0;
+            int facing = 0;
 
             mazeTraversal(maze, xStart, yStart, facing);
 
@@ -60,21 +64,30 @@ namespace cis237assignment2
         {
             //Pass in parameters to move(this is the recursive method)
             //Implement maze traversal recursive call
-
-            char currentPosition = maze[xPos, yPos];
-
-            maze[xPos, yPos] = '0';
+            char currentPosition = maze[xPos, yPos];           
 
             printMaze(maze, xPos, yPos);
 
-            int success = 0;
+            maze[xPos, yPos] = 'X';
 
-            while (success == 0)
+            /*
+             * Stepping through the maze will check the current direction we are facing. Once the direction
+             * is determined it will check if the spot in either direction is open. If the spot is open it
+             * will move their and send the new position and direction back to the method to start over again. 
+             * If no spot is open it will mark its position with a 0 and return to the previous position. This
+             * will continue until it reach the base case which is the exit of the maze. once that is done it 
+             * will return to the start point and back to start on the next maze.
+             * */
+            while (solved == 0)
             {
-                if ((xPos == 4) && (yPos == 11))
+                //Test if at the exit of the maze - base case
+                if ((xPos == 4) && (yPos == 11) || (xPos == 11) && (yPos == 4))
                 {
-                    //At the exit of the maze - set success high
-                    success = 1;
+                    //At the exit of the maze - set success high 
+                    printMaze(maze, xPos, yPos);
+                    solved = 1;                 
+                    Console.WriteLine("You have solved this maze!!");
+                    return;
                 }
                 else if (facing == 0)   //Facing Up
                 {
@@ -88,31 +101,47 @@ namespace cis237assignment2
                     }
                     else if (maze[xPos, yPos - 1] == '.') //Try Left
                     {
-                        mazeTraversal(maze, xPos, yPos - 1, 1); // Move left
+                        mazeTraversal(maze, xPos, yPos - 1, 3); // Move left
+                    }
+                    else if (maze[xPos +1, yPos] == '.') //Try Down
+                    {
+                        mazeTraversal(maze, xPos + 1, yPos, 2); // Move Down
                     }
                     else
                     {
-                        //success = 0;
+                        //If no open positions mark the space with a 0 as a bad direction
+                        if (solved == 0)
+                        {
+                            maze[xPos, yPos] = '0';
+                        }
                         return;
                     }
                 }
                 else if (facing == 1)   //Facing Right
                 {
-                    if (maze[xPos + 1, yPos] == '.') //Try Down
+                    if (maze[xPos, yPos + 1] == '.') //Try Right
                     {
-                        mazeTraversal(maze, xPos + 1, yPos, 2); // Move down
+                        mazeTraversal(maze, xPos, yPos + 1, 1); // Move Right
                     }
-                    else if (maze[xPos, yPos + 1] == '.') //Try Right
+                    else if (maze[xPos + 1, yPos] == '.') //Try Down
                     {
-                        mazeTraversal(maze, xPos, yPos + 1, 1); // Move right
+                        mazeTraversal(maze, xPos + 1, yPos, 2); // Move Down
                     }
                     else if (maze[xPos - 1, yPos] == '.') //Try Up
                     {
                         mazeTraversal(maze, xPos - 1, yPos, 0); // Move up
                     }
+                    else if (maze[xPos, yPos - 1] == '.') //Try Left
+                    {
+                        mazeTraversal(maze, xPos, yPos - 1, 3); // Move left
+                    }
                     else
                     {
-                        //success = 0;
+                        //If no open positions mark the space with a 0 as a bad direction
+                        if (solved == 0)
+                        {
+                            maze[xPos, yPos] = '0';
+                        }
                         return;
                     }
                 }
@@ -130,9 +159,17 @@ namespace cis237assignment2
                     {
                         mazeTraversal(maze, xPos, yPos - 1, 3); // Move Left
                     }
+                    else if (maze[xPos - 1, yPos] == '.') //Try Up
+                    {
+                        mazeTraversal(maze, xPos - 1, yPos, 0); // Move up
+                    }
                     else
                     {
-                        //success = 0;
+                        //If no open positions mark the space with a 0 as a bad direction
+                        if (solved == 0)
+                        {
+                            maze[xPos, yPos] = '0';
+                        }
                         return;
                     }
                 }
@@ -150,9 +187,17 @@ namespace cis237assignment2
                     {
                         mazeTraversal(maze, xPos - 1, yPos, 0); // Move up
                     }
+                    else if (maze[xPos, yPos + 1] == '.') //Try Right
+                    {
+                        mazeTraversal(maze, xPos, yPos + 1, 1); // Move right
+                    }
                     else
                     {
-                        //success = 0;
+                        //If no open positions mark the space with a 0 as a bad direction
+                        if (solved == 0)
+                        {
+                            maze[xPos, yPos] = '0';
+                        }
                         return;
                     }
                 }
@@ -160,17 +205,23 @@ namespace cis237assignment2
     
         }
 
-        private void printMaze(char[,] maze, int xPos, int yPos)
+        public void printMaze(char[,] maze, int xPos, int yPos)
         {
+            //Clear the current maze on the console
+            Console.Clear();
+
             int counter = 0;
 
+            //Loop through the maze to print the current position
             foreach (char x in maze)
             {
+                //If at the edge of the maze add line to continue printing
                 if (counter == 11)
                 {
                     Console.WriteLine(x);
                     counter = 0;
                 }
+                //If not at the edge continue printing the current line
                 else
                 {
                     Console.Write(x);
@@ -178,6 +229,8 @@ namespace cis237assignment2
                 }
 
             }
+            //Delay to show current progress through the maze
+            System.Threading.Thread.Sleep(500);
         }
     }
 }

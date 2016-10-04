@@ -1,7 +1,7 @@
 # Assignment 2 - Recursion to solve a maze
 ## Due 10-04-2016
 
-## Author
+## Author: Patrick Lankford
 
 ## Description
 
@@ -40,6 +40,6 @@ Don't forget that you must have a base case for your recursive method or you wil
 | Print Solved Result | 5      |
 | **Total**           | **100**|
 
-## Outside Resources Used
+## Outside Resources Used: Stackoverflow.com, MSDN, cplusplus.com, codeproject.com
 
-## Known Problems, Issues, And/Or Errors in the Program
+## Known Problems, Issues, And/Or Errors in the Program: None Known
